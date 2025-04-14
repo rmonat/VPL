@@ -282,8 +282,12 @@ module Int = struct
 		in
 		pow_rec u 0
 
-	let ofQ _ = Stdlib.failwith "Scalar.Int.ofQ"
-	let toQ n = Rat.ofZ n u
+  let ofQ q =
+    if Z.(equal (Q.den q) one) then
+      Q.to_bigint q
+    else Stdlib.failwith "Scalar.Int.ofQ"
+
+  let toQ n = Rat.ofZ n u
 
     let gcd _ _ = failwith "unimplemented"
     let toZ _ = failwith "unimplemented"
